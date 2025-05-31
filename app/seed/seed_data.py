@@ -14,6 +14,17 @@ from sqlalchemy.exc import IntegrityError
 def seed():
     db = SessionLocal()
     try:
+        # Nettoyage de la base (dans l'ordre inverse des dépendances)
+        db.query(Mission).delete()
+        db.query(Reception).delete()
+        db.query(Implantation).delete()
+        db.query(LigneCommande).delete()
+        db.query(Commande).delete()
+        db.query(Agent).delete()
+        db.query(Emplacement).delete()
+        db.query(Article).delete()
+        db.commit()
+
         # === ARTICLES ===
         articles = [
             Article(
@@ -203,61 +214,61 @@ def seed():
             Agent(
                 id='17ec87fd-6f24-4e2c-a6b6-7928025a94b3',
                 nom='Agent 0',
-                email='agent0@wms.local',
+                email='agent0@example.com',
                 actif=True,
             ),
             Agent(
                 id='0a481da4-6d89-4d76-b333-0217bc341a50',
                 nom='Agent 1',
-                email='agent1@wms.local',
+                email='agent1@example.com',
                 actif=False,
             ),
             Agent(
                 id='a3c9c21f-23a7-43a0-bbab-65b3c23ae52b',
                 nom='Agent 2',
-                email='agent2@wms.local',
+                email='agent2@example.com',
                 actif=True,
             ),
             Agent(
                 id='4eeeee91-0c11-4175-972e-d158af48cf04',
                 nom='Agent 3',
-                email='agent3@wms.local',
+                email='agent3@example.com',
                 actif=True,
             ),
             Agent(
                 id='3ddf50cc-f826-4cdc-b471-fab321d83aca',
                 nom='Agent 4',
-                email='agent4@wms.local',
+                email='agent4@example.com',
                 actif=True,
             ),
             Agent(
                 id='a33cb3c6-6987-483c-ac12-35cbcbd661c7',
                 nom='Agent 5',
-                email='agent5@wms.local',
+                email='agent5@example.com',
                 actif=False,
             ),
             Agent(
                 id='813277e8-588d-429e-98ce-8d162ed4fe91',
                 nom='Agent 6',
-                email='agent6@wms.local',
+                email='agent6@example.com',
                 actif=True,
             ),
             Agent(
                 id='877948d2-9dce-4d80-b679-53a1fb7fb76c',
                 nom='Agent 7',
-                email='agent7@wms.local',
+                email='agent7@example.com',
                 actif=True,
             ),
             Agent(
                 id='000731c0-9647-4bba-a339-7657de580786',
                 nom='Agent 8',
-                email='agent8@wms.local',
+                email='agent8@example.com',
                 actif=True,
             ),
             Agent(
                 id='b6dafcfc-1462-440a-964c-e78652ef5a61',
                 nom='Agent 9',
-                email='agent9@wms.local',
+                email='agent9@example.com',
                 actif=True,
             ),
         ]
@@ -313,6 +324,34 @@ def seed():
                 id='1ea0db4c-0ae4-4bcf-b805-0a6febaec621',
                 reference='CMD0009',
                 etat='BROUILLON',
+            ),
+        ]
+
+        lignes_commandes = [
+            LigneCommande(
+                commande_id='8a9e2385-1ce3-4bbf-939c-3b351452244f',
+                article_id='10d55c46-9840-43f0-8dc5-23f8453b16d6',
+                quantite=3,
+            ),
+            LigneCommande(
+                commande_id='8a9e2385-1ce3-4bbf-939c-3b351452244f',
+                article_id='620d48b8-48ac-4353-9fa6-be268263c56c',
+                quantite=1,
+            ),
+            LigneCommande(
+                commande_id='26a81ee6-2f24-422c-90e8-d9754760827b',
+                article_id='7a855ef8-ed39-4c8b-9cfa-6696e48a1aa7',
+                quantite=2,
+            ),
+            LigneCommande(
+                commande_id='26a81ee6-2f24-422c-90e8-d9754760827b',
+                article_id='cef516c1-6599-47c3-a189-7a2fc515037f',
+                quantite=6,
+            ),
+            LigneCommande(
+                commande_id='fa9ee683-77c7-4025-9717-86a56b21d6d8',
+                article_id='1a4649e4-e6d6-4737-8aa9-c614f558a39f',
+                quantite=10,
             ),
         ]
 
@@ -883,7 +922,7 @@ def seed():
         ]
 
         # Ajout global
-        db.add_all(articles + agents + commandes + emplacements + implantations + missions + receptions)
+        db.add_all(articles + agents + commandes + lignes_commandes + emplacements + implantations + missions + receptions)
         db.commit()
         print("Données de test insérées avec succès.")
 

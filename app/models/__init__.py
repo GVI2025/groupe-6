@@ -1,7 +1,7 @@
 from .mission import  Mission
 from .article import Article
 from .agent import Agent
-from .commande import Commande
+from .commande import Commande, LigneCommande
 from .emplacement import Emplacement
 from .implantation import Implantation
 from .reception import Reception
@@ -11,6 +11,7 @@ __all__ = [
     "Article",
     "Agent",
     "Commande",
+    "LigneCommande",
     "Emplacement",
     "Implantation",
     "Reception"
