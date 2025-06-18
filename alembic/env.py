@@ -1,4 +1,3 @@
-
 from logging.config import fileConfig
 from sqlalchemy import engine_from_config, pool
 from alembic import context
@@ -9,13 +8,8 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 # Import de la base SQLAlchemy et des modèles
 from app.database.database import Base
-import app.models.article
-import app.models.agent
-import app.models.commande
-import app.models.emplacement
-import app.models.implantation
-import app.models.mission
-import app.models.reception
+import app.models.salle
+import app.models.reservation
 
 # Alembic config
 config = context.config

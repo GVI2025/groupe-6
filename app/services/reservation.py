@@ -1,0 +1,30 @@
+from sqlalchemy.orm import Session
+from app.models.reservation import Reservation
+from app.schemas.reservation import ReservationCreate
+from uuid import UUID
+from typing import List, Optional
+from datetime import date, time
+
+def get_reservations(db: Session) -> List[Reservation]:
+    return db.query(Reservation).all()
+
+def get_reservation(db: Session, reservation_id: UUID) -> Optional[Reservation]:
+    return db.query(Reservation).filter(Reservation.id == reservation_id).first()
+
+def get_reservations_by_salle_date_heure(db: Session, salle_id: UUID, date_: date, heure_: time) -> List[Reservation]:
+    return db.query(Reservation).filter(
+        Reservation.salle_id == salle_id,
+        Reservation.date == date_,
+        Reservation.heure == heure_
+    ).all()
+
+def create_reservation(db: Session, reservation: ReservationCreate) -> Optional[Reservation]:
+    # Vérifier la disponibilité
+    existing = get_reservations_by_salle_date_heure(db, reservation.salle_id, reservation.date, reservation.heure)
+    if existing:
+        return None
+    db_reservation = Reservation(**reservation.dict())
+    db.add(db_reservation)
+    db.commit()
+    db.refresh(db_reservation)
+    return db_reservation 
