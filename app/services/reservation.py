@@ -9,21 +9,23 @@ def get_reservations(db: Session) -> List[Reservation]:
     return db.query(Reservation).all()
 
 def get_reservation(db: Session, reservation_id: UUID) -> Optional[Reservation]:
-    return db.query(Reservation).filter(Reservation.id == reservation_id).first()
+    return db.query(Reservation).filter(Reservation.id == str(reservation_id)).first()
 
-def get_reservations_by_salle_date_heure(db: Session, salle_id: UUID, date_: date, heure_: time) -> List[Reservation]:
+def get_reservations_by_salle_date_heure(db: Session, salle_id: str, date_: date, heure_: time) -> List[Reservation]:
     return db.query(Reservation).filter(
-        Reservation.salle_id == salle_id,
+        Reservation.salle_id == str(salle_id),
         Reservation.date == date_,
         Reservation.heure == heure_
     ).all()
 
 def create_reservation(db: Session, reservation: ReservationCreate) -> Optional[Reservation]:
     # Vérifier la disponibilité
-    existing = get_reservations_by_salle_date_heure(db, reservation.salle_id, reservation.date, reservation.heure)
+    existing = get_reservations_by_salle_date_heure(db, str(reservation.salle_id), reservation.date, reservation.heure)
     if existing:
         return None
-    db_reservation = Reservation(**reservation.dict())
+    reservation_dict = reservation.dict()
+    reservation_dict["salle_id"] = str(reservation_dict["salle_id"])
+    db_reservation = Reservation(**reservation_dict)
     db.add(db_reservation)
     db.commit()
     db.refresh(db_reservation)
