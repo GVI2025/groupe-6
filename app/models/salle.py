@@ -5,7 +5,7 @@ from app.database.database import Base
 
 class Salle(Base):
     __tablename__ = "salles"
-    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4, unique=True, nullable=False)
+    id = Column(String(36), primary_key=True, default=uuid.uuid4, unique=True, nullable=False)
     nom = Column(String, nullable=False)
     capacite = Column(Integer, nullable=False)
     localisation = Column(String, nullable=False)
