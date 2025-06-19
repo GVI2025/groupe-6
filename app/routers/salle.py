@@ -1,6 +1,6 @@
-from fastapi import APIRouter, Depends, HTTPException, Optional
+from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from typing import List
+from typing import List, Optional
 from uuid import UUID
 from app.schemas.salle import SalleCreate, SalleRead, SalleUpdate
 from app.services.salle import get_salles, get_salle, create_salle, update_salle, delete_salle
