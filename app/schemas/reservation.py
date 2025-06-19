@@ -7,7 +7,6 @@ class ReservationBase(BaseModel):
     date: date
     heure: time
     utilisateur: str
-    commentaire: Optional[str] = None
 
 class ReservationCreate(ReservationBase):
     pass

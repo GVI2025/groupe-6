@@ -34,7 +34,6 @@ def upgrade() -> None:
         sa.Column('date', sa.Date(), nullable=False),
         sa.Column('heure', sa.Time(), nullable=False),
         sa.Column('utilisateur', sa.String(), nullable=False),
-        sa.Column('commentaire', sa.String(), nullable=True)
     )
     # ### end Alembic commands ###
 

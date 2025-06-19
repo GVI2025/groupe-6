@@ -28,7 +28,6 @@ def seed():
                 date=date.today(),
                 heure=time(10, 0),
                 utilisateur="alice",
-                commentaire="Réunion d'équipe"
             ),
             Reservation(
                 id=str(uuid.uuid4()),
@@ -36,7 +35,6 @@ def seed():
                 date=date.today(),
                 heure=time(11, 0),
                 utilisateur="bob",
-                commentaire=None
             ),
         ]
         db.add_all(reservations)
