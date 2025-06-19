@@ -3,6 +3,12 @@ from fastapi.testclient import TestClient
 from app.main import app
 from datetime import date, time
 
+from app.database.database import Base, engine
+
+Base.metadata.drop_all(bind=engine)  # optionnel mais utile en test
+Base.metadata.create_all(bind=engine)
+
+
 client = TestClient(app)
 
 def test_create_and_list_reservation():
@@ -18,7 +24,8 @@ def test_create_and_list_reservation():
         "salle_id": salle_id,
         "date": str(date.today()),
         "heure": "10:00:00",
-        "utilisateur": "user1"
+        "utilisateur": "user1",
+        "commentaire": "Test de réservation"
     }
     resp = client.post("/reservations/", json=reservation_data)
     assert resp.status_code == 201
