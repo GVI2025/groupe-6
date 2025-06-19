@@ -4,8 +4,11 @@ from app.schemas.salle import SalleCreate, SalleUpdate
 from uuid import UUID
 from typing import List, Optional
 
-def get_salles(db: Session) -> List[Salle]:
-    return db.query(Salle).all()
+def get_salles(db: Session, disponible: Optional[bool] = None) -> List[Salle]:
+    query = db.query(Salle)
+    if disponible is not None:
+        query = query.filter(Salle.disponible == disponible)
+    return query.all()
 
 def get_salle(db: Session, salle_id: UUID) -> Optional[Salle]:
     return db.query(Salle).filter(Salle.id == salle_id).first()
@@ -33,4 +36,4 @@ def delete_salle(db: Session, salle_id: UUID) -> bool:
         return False
     db.delete(db_salle)
     db.commit()
-    return True 
+    return True

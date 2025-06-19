@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from typing import List
+from typing import List, Optional
 from uuid import UUID
 from app.schemas.salle import SalleCreate, SalleRead, SalleUpdate
 from app.services.salle import get_salles, get_salle, create_salle, update_salle, delete_salle
@@ -11,8 +11,8 @@ router = APIRouter(prefix="/salles", tags=["salles"])
 SALLE_NOT_FOUND = "Salle non trouvée"
 
 @router.get("/", response_model=List[SalleRead])
-def list_salles(db: Session = Depends(get_db)):
-    return get_salles(db)
+def list_salles(db: Session = Depends(get_db), disponible: Optional[bool] = None):
+    return get_salles(db, disponible)
 
 @router.get("/{salle_id}", response_model=SalleRead)
 def read_salle(salle_id: UUID, db: Session = Depends(get_db)):
@@ -37,4 +37,4 @@ def delete_existing_salle(salle_id: UUID, db: Session = Depends(get_db)):
     deleted = delete_salle(db, salle_id)
     if not deleted:
         raise HTTPException(status_code=404, detail=SALLE_NOT_FOUND)
-    return None 
+    return None

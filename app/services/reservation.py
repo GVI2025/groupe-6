@@ -1,5 +1,6 @@
 from sqlalchemy.orm import Session
 from app.models.reservation import Reservation
+from app import models
 from app.schemas.reservation import ReservationCreate
 from uuid import UUID
 from typing import List, Optional
@@ -30,3 +31,10 @@ def create_reservation(db: Session, reservation: ReservationCreate) -> Optional[
     db.commit()
     db.refresh(db_reservation)
     return db_reservation 
+
+def delete_reservation(db: Session, reservation_id: UUID) -> None:
+    res = db.get(models.Reservation, reservation_id)
+    if res is None:
+        raise HTTPException(status_code=404, detail="Reservation not found")
+    db.delete(res)
+    db.commit()
