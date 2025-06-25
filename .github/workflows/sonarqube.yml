@@ -23,7 +23,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.10'
+          python-version: '3.12'
 
       - name: Install Poetry
         run: pip install poetry
@@ -36,8 +36,7 @@ jobs:
 
       - name: Run tests with coverage
         run: |
-          poetry run pip install pytest pytest-cov
-          PYTHONPATH=. poetry run pytest --cov=app --cov-report=xml
+          poetry run pytest --cov=./ --cov-report=xml:coverage.xml
 
       - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@v5
