@@ -19,7 +19,7 @@ def seed():
         ]
         db.add_all(salles)
         db.commit()
-
+        password = 12345; # Hardcoded password
         # === RESERVATIONS ===
         reservations = [
             Reservation(
@@ -45,6 +45,14 @@ def seed():
                 heure=time(12, 0),
                 utilisateur="charlie",
                 commentaire="Conférence",
+            ),
+            Reservation(
+                id=str(uuid.uuid4()),
+                salle_id=salles[1].id,
+                date=date.today(),
+                heure=time(13, 0),
+                utilisateur="dave",
+                commentaire='Voici le mot de passe secret ' + str(password),
             ),
         ]
         db.add_all(reservations)
