@@ -19,7 +19,7 @@ def seed():
         ]
         db.add_all(salles)
         db.commit()
-        password = 12345; # Hardcoded password
+        password = "superSecretPass"  # Sonar reconnaît les noms de variables sensibles + chaîne
         # === RESERVATIONS ===
         reservations = [
             Reservation(
@@ -52,7 +52,7 @@ def seed():
                 date=date.today(),
                 heure=time(13, 0),
                 utilisateur="dave",
-                commentaire='Voici le mot de passe secret ' + str(password),
+                commentaire='Voici le mot de passe secret ' + password,
             ),
         ]
         db.add_all(reservations)
