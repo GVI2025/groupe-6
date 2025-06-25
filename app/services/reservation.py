@@ -5,6 +5,7 @@ from app.schemas.reservation import ReservationCreate
 from uuid import UUID
 from typing import List, Optional
 from datetime import date, time
+from fastapi import HTTPException
 
 def get_reservations(db: Session) -> List[Reservation]:
     return db.query(Reservation).all()
@@ -33,7 +34,7 @@ def create_reservation(db: Session, reservation: ReservationCreate) -> Optional[
     return db_reservation 
 
 def delete_reservation(db: Session, reservation_id: UUID) -> None:
-    res = db.get(models.Reservation, reservation_id)
+    res = db.get(models.Reservation, str(reservation_id))
     if res is None:
         raise HTTPException(status_code=404, detail="Reservation not found")
     db.delete(res)

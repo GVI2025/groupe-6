@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 from typing import List
 from uuid import UUID
 from app.schemas.reservation import ReservationCreate, ReservationRead
-from app.services.reservation import get_reservations, get_reservation, create_reservation
+from app.services.reservation import get_reservations, get_reservation, create_reservation, delete_reservation
 from app.database.database import get_db
 
 router = APIRouter(prefix="/reservations", tags=["reservations"])
@@ -24,4 +24,9 @@ def create_new_reservation(reservation: ReservationCreate, db: Session = Depends
     created = create_reservation(db, reservation)
     if not created:
         raise HTTPException(status_code=400, detail="Salle déjà réservée pour ce créneau")
-    return created 
+    return created
+
+@router.delete("/{reservation_id}", status_code=204)
+def delete_reservation_route(reservation_id: UUID, db: Session = Depends(get_db)):
+    delete_reservation(db, reservation_id)
+    return None 

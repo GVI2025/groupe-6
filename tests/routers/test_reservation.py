@@ -35,4 +35,30 @@ def test_create_and_list_reservation():
     # Lister les réservations
     resp3 = client.get("/reservations/")
     assert resp3.status_code == 200
-    assert isinstance(resp3.json(), list) 
+    assert isinstance(resp3.json(), list)
+
+def test_delete_reservation():
+    # Créer une salle d'abord
+    salle_resp = client.post("/salles/", json={
+        "nom": "Salle Delete",
+        "capacite": 5,
+        "localisation": "Bâtiment Y"
+    })
+    salle_id = salle_resp.json()["id"]
+    # Créer une réservation
+    reservation_data = {
+        "salle_id": salle_id,
+        "date": str(date.today()),
+        "heure": "11:00:00",
+        "utilisateur": "user2",
+        "commentaire": "Test suppression"
+    }
+    resp = client.post("/reservations/", json=reservation_data)
+    assert resp.status_code == 201
+    reservation_id = resp.json()["id"]
+    # Supprimer la réservation
+    del_resp = client.delete(f"/reservations/{reservation_id}")
+    assert del_resp.status_code == 204
+    # Vérifier qu'elle n'existe plus
+    get_resp = client.get(f"/reservations/{reservation_id}")
+    assert get_resp.status_code == 404 
