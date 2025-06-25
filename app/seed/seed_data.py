@@ -38,6 +38,14 @@ def seed():
                 utilisateur="bob",
                 commentaire=None,
             ),
+            Reservation(
+                id=str(uuid.uuid4()),
+                salle_id=salles[0].id,
+                date=date.today(),
+                heure=time(12, 0),
+                utilisateur="charlie",
+                commentaire="Conférence",
+            ),
         ]
         db.add_all(reservations)
         db.commit()
