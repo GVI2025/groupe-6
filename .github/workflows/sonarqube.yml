@@ -36,8 +36,7 @@ jobs:
 
       - name: Run tests with coverage
         run: |
-          poetry run pip install pytest pytest-cov
-          PYTHONPATH=. poetry run pytest --cov=app --cov-report=xml
+          pytest --cov=./ --cov-report=xml:coverage.xml
 
       - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@v5
