@@ -103,3 +103,6 @@ alembic/               # Alembic migrations
 These scripts are defined in `pyproject.toml`:
 * `poetry run test`: Run tests
 * `poetry run migrate`: Apply Alembic migrations
+
+
+<!-- Security scan triggered at 2025-09-02 01:38:36 -->
