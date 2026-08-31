@@ -114,3 +114,5 @@ These scripts are defined in `pyproject.toml`:
 <!-- Security scan triggered at 2026-08-31 16:51:32 -->
 
 <!-- Security scan triggered at 2026-08-31 16:40:51 -->
+
+<!-- Security scan triggered at 2026-08-31 18:10:24 -->
